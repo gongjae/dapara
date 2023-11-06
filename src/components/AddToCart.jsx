@@ -39,7 +39,7 @@ export default function AddToCart({
             Qty
             <select
               value={qty}
-              onChange={(e) => setQty(item, Number(e.target.value))}
+              onChange={(e) => setQty(Number(e.target.value))}
             >
                              
               {[...Array(product.countInStock).keys()].map((x) => (
