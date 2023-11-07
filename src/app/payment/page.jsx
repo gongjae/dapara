@@ -46,26 +46,24 @@ export default function PaymentPage() {
       >
         <h1 className="mb-4 text-xl font-bold">Payment Method</h1>
 
-        {['PayPal', 'Stripe', 'CashOnDelivery', 'kakaoPay', 'NaverPay'].map(
-          (payment) => (
-            <div key={payment} className="mb-4">
-              <input
-                type="radio"
-                name="paymentMethod"
-                className="p-2 outline-none focus:ring-0"
-                id={payment}
-                value={payment}
-                {...register('paymentMethod', {
-                  required: 'Please select payment method',
-                })}
-              />
+        {payments.map((payment) => (
+          <div key={payment} className="mb-4">
+            <input
+              type="radio"
+              name="paymentMethod"
+              className="p-2 outline-none focus:ring-0"
+              id={payment}
+              value={payment}
+              {...register('paymentMethod', {
+                required: 'Please select payment method',
+              })}
+            />
 
-              <label className="p-2" htmlFor={payment}>
-                {payment}
-              </label>
-            </div>
-          )
-        )}
+            <label className="p-2" htmlFor={payment}>
+              {payment}
+            </label>
+          </div>
+        ))}
         {errors.paymentMethod && (
           <div className="text-red-500">{errors.paymentMethod.message}</div>
         )}
