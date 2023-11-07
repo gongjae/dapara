@@ -1,5 +1,4 @@
 'use client'
-
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/navigation'
@@ -12,9 +11,11 @@ export default function AddToCart({
   increasePerClick = false,
 }) {
   const dispatch = useDispatch()
+
   const { cartItems } = useSelector((state) => state.cart)
   const router = useRouter()
   const [qty, setQty] = useState(1)
+
   const addToCartHandler = () => {
     let newQty = qty
     if (increasePerClick) {
@@ -23,46 +24,43 @@ export default function AddToCart({
         if (existItem.qty + 1 <= product.countInStock) {
           newQty = existItem.qty + 1
         } else {
-          return alert('No more product')
+          return alert('No more product exist')
         }
       }
-      dispatch(addToCart({ ...product, qty: newQty }))
-
-      if (redirect) router.push('/cart')
     }
+    dispatch(addToCart({ ...product, qty: newQty }))
+
+    if (redirect) router.push('/cart')
   }
+
   return (
-    <div>
+    <>
       {product.countInStock > 0 && showQty && (
         <div className="mb-2 flex justify-between">
+          <div>Qty</div>
           <div>
-            Qty
             <select
               value={qty}
               onChange={(e) => setQty(Number(e.target.value))}
             >
-                             
               {[...Array(product.countInStock).keys()].map((x) => (
                 <option key={x + 1} value={x + 1}>
-                  {x + 1}                 
+                  {x + 1}
                 </option>
               ))}
-                           
-            </select>
+            </select>{' '}
           </div>
         </div>
       )}
       <div>
         {product.countInStock > 0 ? (
           <button className="primary-button w-full" onClick={addToCartHandler}>
-            Add to Cart
+            Add to cart
           </button>
         ) : (
-          <button disabled className="default-button">
-            Out of stock
-          </button>
+          <button disabled>Out of stock</button>
         )}
       </div>
-    </div>
+    </>
   )
 }
